@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<!-- Copyright © Zach Greenvoss -->
+<!-- Licensed under the MIT license - http://www.opensource.org/licenses/mit-license.php -->
+
+<html lang="en">
+<head>
+    <title>Project Stella</title>
+    <script type="text/javascript" src="js/SpriteFunctions.js"></script>
+    <link href="css/style.css" rel="stylesheet" />
+    <script>
+        var worldObj;
+        
+        function Init()
+        {
+            worldObj = new World();
+            worldObj.Init("canvas");
+            
+            var newSprite = new Sprite(initTemp,updateTemp,drawTemp);
+            newSprite.Init();
+            worldObj.DisplayList.push(newSprite);
+            
+            //worldObj.Display();
+            setInterval(UpdateAndDisplay,100);
+        }
+        
+        
+        function UpdateAndDisplay()
+        {
+            worldObj.Update();
+            worldObj.Display();
+        }
+        
+       
+        
+        function initTemp()
+        {
+            this.XPos = 10;
+            this.YPos = 10;
+            this.Width = 10;
+            this.Height = 10;
+        }
+        
+        function updateTemp()
+        {
+            this.XPos += 1;
+        }
+        
+        function drawTemp(context)
+        {
+            context.fillRect(0,0,10,10);    
+            context.fillRect(this.XPos,this.YPos,this.Width,this.Height);    
+        }
+        
+    </script>
+</head>
+<body onload="Init();">
+    <canvas id="canvas" width="600" height="400">
+        Sorry - your browser does not support HTML5
+    </canvas>
+</body>
+</html>
