@@ -14,41 +14,18 @@
         {
             worldObj = new World();
             worldObj.Init("canvas");
+            worldObj.BuildBackground();
             
-            var newSprite = new Sprite(initTemp,updateTemp,drawTemp);
-            newSprite.Init();
-            worldObj.DisplayList.push(newSprite);
+            var knight = new ImgSprite("img/knight.gif",0,0,2,3,16,18,0,0,500);
+            worldObj.DisplayList.push(knight);
             
-            //worldObj.Display();
             setInterval(UpdateAndDisplay,100);
         }
-        
         
         function UpdateAndDisplay()
         {
             worldObj.Update();
             worldObj.Display();
-        }
-        
-       
-        
-        function initTemp()
-        {
-            this.XPos = 10;
-            this.YPos = 10;
-            this.Width = 10;
-            this.Height = 10;
-        }
-        
-        function updateTemp()
-        {
-            this.XPos += 1;
-        }
-        
-        function drawTemp(context)
-        {
-            context.fillRect(0,0,10,10);    
-            context.fillRect(this.XPos,this.YPos,this.Width,this.Height);    
         }
         
     </script>
