@@ -20,14 +20,23 @@ function World()
             {
                 this.DisplayList[x].Draw(this.context);
             }
+            //Draw grid
+            this.context.strokeStyle = "#EEE";
+            for(x=0;x<20;x++)
+            {
+                for(y=0;y<10;y++)
+                {
+                    this.context.strokeRect((x*32), (y*32), 32, 32);
+                }
+            }
         };
         
     this.BuildBackground = function()
         {
            //Build Background
-           for(x=0;x<16;x++)
+           for(x=0;x<40;x++)
            {
-                for(y=0;y<16;y++)
+                for(y=0;y<20;y++)
                 {
                     worldObj.DisplayList.push(new ImgSprite("img/grass.jpg" ,  (x*16),(y*16),3,5,16,16,Math.floor(Math.random()*3),Math.floor(Math.random()*4),-1));
                 }
@@ -36,9 +45,87 @@ function World()
         };
 }
 
+function SpellBook(width, height)
+{
+    this.width = width;
+    this.height = height;
+    this.context = null;
+    this.DisplayList = [];
+    this.Init = function(canvasID)
+        {
+            this.context = document.getElementById(canvasID).getContext('2d');
+            this.DisplayList.push(new ImgSprite("img/Icon_MoveForward.jpg",10,20,0,0,32,32,0,0,-1));
+            this.DisplayList.push(new ImgSprite("img/Icon_TurnRight.jpg",50,20,0,0,32,32,0,0,-1));
+            this.DisplayList.push(new ImgSprite("img/Icon_TurnLeft.jpg",90,20,0,0,32,32,0,0,-1));
+        }
+        
+    this.Update = function()
+        {
+            for(x=0;x<this.DisplayList.length;x++)
+            {
+                this.DisplayList[x].UpdateState(this.context);
+            }
+        };
+    
+    this.Display = function()
+        {
+            this.context.fillStyle = "#e3ceaf";
+            this.context.fillRect(0, 0, this.width, this.height);
+            
+            this.context.font = "15px Arial";
+            this.context.fillStyle = "#000";
+            this.context.fillText("Spells",48,14)
+            for(x=0;x<this.DisplayList.length;x++)
+            {
+                this.DisplayList[x].Draw(this.context);
+            }
+            
+        };
+}
 
 
-function Sprite(initFX, updateFX, drawFX)
+function ActionSection(width, height)
+{
+    this.width = width;
+    this.height = height;
+    this.context = null;
+    this.DisplayList = [];
+    this.Init = function(canvasID)
+        {
+            this.context = document.getElementById(canvasID).getContext('2d');
+        }
+        
+    this.Update = function()
+        {
+            for(x=0;x<this.DisplayList.length;x++)
+            {
+                this.DisplayList[x].UpdateState(this.context);
+            }
+        };
+    
+    this.Display = function()
+        {
+            this.context.fillStyle = "#999";
+            this.context.fillRect(0, 0, this.width, this.height);
+            
+            this.context.strokeStyle = "#EEE";
+            for(x=0;x<10;x++)
+            {
+                for(y=0;y<4;y++)
+                {
+                    this.context.strokeRect(15 + (x*32) + (x*15), 15 + (y*32) + (y*15), 32, 32);
+                }
+            }
+            
+            for(x=0;x<this.DisplayList.length;x++)
+            {
+                this.DisplayList[x].Draw(this.context);
+            }
+            
+        };
+}
+
+function DisplayObject(initFX, updateFX, drawFX)
 {
     this.Init = initFX;
     this.UpdateState = updateFX;

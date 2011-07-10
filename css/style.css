@@ -1,10 +1,50 @@
-body, div, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, img, form, fieldset, input, textarea, blockquote
 {
-	margin: 0; padding: 0; border: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+header, footer, aside, nav, article
+{  
+    display: block;  
 }
 
 body
+{  
+    margin: 0 auto;  
+    font: 13px/22px Helvetica, Arial, sans-serif;  
+    background: #f0f0f0;  
+} 
+
+#levelHeader
 {
-	font: 14px Helvetica, Sans-Serif; line-height: 24px; color: #a6a6a6;
-	#background: #000 url(images/bg-pattern.png);
+	left: 0;  
+	width: 100%; 
+}
+
+#levelHeader header h1
+{  
+        display: block;  
+        text-align: center;  
+        text-decoration: none;  
+        color: #777;  
+}
+
+#playSpace 
+{
+	left: 0;  
+	width: 100%;
+	text-align: center;
+	
+	
+}
+
+#playSpace #canvas
+{
+	border: 2px solid black;
+}
+
+#playSpace #spellBookCanvas
+{
+	vertical-align: top;
 }
