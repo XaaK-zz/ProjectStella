@@ -6,6 +6,7 @@
 <head>
     <title>Project Stella</title>
     <script type="text/javascript" src="js/SpriteFunctions.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" ></script>
     <link href="css/style.css" rel="stylesheet" />
     <script>
         var worldObj;
@@ -28,6 +29,9 @@
             actionSection.Init("actionCanvas");
             
             setInterval(UpdateAndDisplay,100);
+            
+            $(document.getElementById("spellBookCanvas")).click(function(e){spellBook.HandleClick(e);});
+            $(document.getElementById("actionCanvas")).click(function(e){actionSection.HandleClick(e);});
         }
         
         function UpdateAndDisplay()

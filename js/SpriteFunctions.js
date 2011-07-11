@@ -51,12 +51,24 @@ function SpellBook(width, height)
     this.height = height;
     this.context = null;
     this.DisplayList = [];
+    this.SelectedIndex = -1;
     this.Init = function(canvasID)
         {
+            this.CanvasID = canvasID;
             this.context = document.getElementById(canvasID).getContext('2d');
-            this.DisplayList.push(new ImgSprite("img/Icon_MoveForward.jpg",10,20,0,0,32,32,0,0,-1));
+            var moveForwardIcon = new ImgSprite("img/Icon_MoveForward2.jpg",10,20,1,0,32,32,0,0,-1);
+            moveForwardIcon.Click = function ()
+            {
+                if(this.CurrentCol == 1)
+                    this.CurrentCol = 0;
+                else
+                    this.CurrentCol = 1; 
+            };
+            this.DisplayList.push(moveForwardIcon);
             this.DisplayList.push(new ImgSprite("img/Icon_TurnRight.jpg",50,20,0,0,32,32,0,0,-1));
             this.DisplayList.push(new ImgSprite("img/Icon_TurnLeft.jpg",90,20,0,0,32,32,0,0,-1));
+            
+            
         }
         
     this.Update = function()
@@ -80,6 +92,30 @@ function SpellBook(width, height)
                 this.DisplayList[x].Draw(this.context);
             }
             
+        };
+        
+    this.HandleClick = function(e)
+        {
+            var ClickLeft = e.offsetX;
+            var ClickTop = e.offsetY;
+            //this.context.fillStyle = "rgb(255,255,255)";
+            //this.context.fillRect(x, y, 20, 20);
+            for(x=0;x<this.DisplayList.length;x++)
+            {
+                var x0 = Math.max(this.DisplayList[x].XPosition, ClickLeft);
+                var x1 = Math.min(this.DisplayList[x].XPosition + this.DisplayList[x].Width, ClickLeft + 10);
+                if (x0 <= x1)
+                {
+                    var y0 = Math.max(this.DisplayList[x].YPosition, ClickTop);
+                    var y1 = Math.min(this.DisplayList[x].YPosition + this.DisplayList[x].Height, ClickTop + 10);
+                    if (y0 <= y1)
+                    {
+                        this.DisplayList[x].Click();
+                        return;
+                    }
+                }
+                
+            }
         };
 }
 
@@ -122,6 +158,11 @@ function ActionSection(width, height)
                 this.DisplayList[x].Draw(this.context);
             }
             
+        };
+    
+    this.HandleClick = function(e)
+        {
+           //TODO
         };
 }
 
