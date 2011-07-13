@@ -5,7 +5,13 @@
 <html lang="en">
 <head>
     <title>Project Stella</title>
-    <script type="text/javascript" src="js/SpriteFunctions.js"></script>
+    <script src="closure-library/closure/goog/base.js"></script>
+    <!--<script type="text/javascript" src="js/SpriteFunctions.js"></script>-->
+    <script src="js/DisplayableCanvas.js"></script>
+    <script src="js/ImgSprite.js"></script>
+    <script src="js/World.js"></script>
+    <script src="js/SpellBook.js"></script>
+    <script src="js/ActionSection.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" ></script>
     <link href="css/style.css" rel="stylesheet" />
     <script>
@@ -15,23 +21,21 @@
         
         function Init()
         {
-            worldObj = new World();
+            worldObj = new projectStella.World();
             worldObj.Init("canvas");
             worldObj.BuildBackground();
             
-            var knight = new ImgSprite("img/knight.gif",0,0,2,3,16,18,0,0,500);
-            worldObj.DisplayList.push(knight);
+            //var knight = new ImgSprite("img/knight.gif",0,0,2,3,16,18,0,0,500);
+            //worldObj.DisplayList.push(knight);
             
-            spellBook = new SpellBook(132,100);
+            spellBook = new projectStella.SpellBook(132,100);
             spellBook.Init("spellBookCanvas");
            
-            actionSection = new ActionSection(490,200);
+            actionSection = new projectStella.ActionSection(490,200);
             actionSection.Init("actionCanvas");
             
             setInterval(UpdateAndDisplay,100);
-            
-            $(document.getElementById("spellBookCanvas")).click(function(e){spellBook.HandleClick(e);});
-            $(document.getElementById("actionCanvas")).click(function(e){actionSection.HandleClick(e);});
+
         }
         
         function UpdateAndDisplay()
