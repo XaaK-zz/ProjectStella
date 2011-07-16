@@ -17,7 +17,7 @@ projectStella.ActionSection.prototype.Init = function(canvasID)
     {
         projectStella.ActionSection.superClass_.Init.call(this,canvasID);
            
-        goog.events.listen(this.canvasItem, goog.events.EventType.CLICK, this.HandleClick, false, this);
+        
         
     };
 

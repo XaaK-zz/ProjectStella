@@ -12,38 +12,15 @@
     <script src="js/World.js"></script>
     <script src="js/SpellBook.js"></script>
     <script src="js/ActionSection.js"></script>
+    <script src="js/Game.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" ></script>
     <link href="css/style.css" rel="stylesheet" />
     <script>
-        var worldObj;
-        var spellBook;
-        var actionSection;
+        var gameObj;
         
         function Init()
         {
-            worldObj = new projectStella.World();
-            worldObj.Init("canvas");
-            worldObj.BuildBackground();
-            
-            //var knight = new ImgSprite("img/knight.gif",0,0,2,3,16,18,0,0,500);
-            //worldObj.DisplayList.push(knight);
-            
-            spellBook = new projectStella.SpellBook(132,100);
-            spellBook.Init("spellBookCanvas");
-           
-            actionSection = new projectStella.ActionSection(490,200);
-            actionSection.Init("actionCanvas");
-            
-            setInterval(UpdateAndDisplay,100);
-
-        }
-        
-        function UpdateAndDisplay()
-        {
-            worldObj.Update();
-            worldObj.Display();
-            spellBook.Display();
-            actionSection.Display();
+            gameObj = new projectStella.Game(1);
         }
         
     </script>
@@ -57,18 +34,6 @@
         </header>
     </section>
     <section id="playSpace">
-        <canvas id="canvas" width="640" height="320">
-            Sorry - your browser does not support HTML5
-        </canvas>
-        <nobr>
-        <canvas id="actionCanvas" width="490" height="200">
-             Sorry - your browser does not support HTML5
-        </canvas>
-        &nbsp;
-        <canvas id="spellBookCanvas" width="132" height="100">
-             Sorry - your browser does not support HTML5
-        </canvas>
-        </nobr>
     </section>
     
 </body>

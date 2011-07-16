@@ -34,7 +34,7 @@ projectStella.World.prototype.BuildBackground = function()
        {
             for(y=0;y<20;y++)
             {
-                worldObj.DisplayList.push(new projectStella.ImgSprite("img/grass.jpg" ,  (x*16),(y*16),3,5,16,16,Math.floor(Math.random()*3),Math.floor(Math.random()*4),-1));
+                this.DisplayList.push(new projectStella.ImgSprite("img/grass.jpg" ,  (x*16),(y*16),3,5,16,16,Math.floor(Math.random()*3),Math.floor(Math.random()*4),-1));
             }
        }
         

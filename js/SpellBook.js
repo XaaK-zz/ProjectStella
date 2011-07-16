@@ -32,8 +32,7 @@ projectStella.SpellBook.prototype.Init = function(canvasID)
         this.DisplayList.push(moveForwardIcon);
         this.DisplayList.push(new projectStella.ImgSprite("img/Icon_TurnRight.jpg",50,20,0,0,32,32,0,0,-1));
         this.DisplayList.push(new projectStella.ImgSprite("img/Icon_TurnLeft.jpg",90,20,0,0,32,32,0,0,-1));
-        
-        goog.events.listen(this.canvasItem, goog.events.EventType.CLICK, this.HandleClick, false, this);
+        this.SelectedItem = null;
         
     };
 
@@ -64,9 +63,11 @@ projectStella.SpellBook.prototype.HandleClick = function(e)
             {
                 //Push click to sprite
                 this.DisplayList[x].Click();
-                //Handle logic for 
+                //Handle logic for selecting item
+                this.SelectedItem = x;
                 return;   
             }
             
         }
+        this.SelectedItem = null;
     };
