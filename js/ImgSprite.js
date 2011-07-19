@@ -18,31 +18,32 @@ projectStella.ImgSprite = function(img,XPos,YPos,HPics,VPics,xSize,ySize,
     this.CurrentCol = currentCol;
     this.FlipSpeed = flipSpeed;
     this.LastFlippedTime = new Date().getTime();
-    
-    this.UpdateState = function()
-        {
-            var currentTime = new Date().getTime();
-            if(this.FlipSpeed > 0)
-            {
-                if((currentTime - this.LastFlippedTime) > flipSpeed)
-                {
-                    this.CurrentCol++;
-                    if(this.CurrentCol >= HPics)
-                        this.CurrentCol = 0;
-                        
-                    this.LastFlippedTime = new Date().getTime();
-                }
-            }
-        };
-    
-    this.Draw = function(context)
-        {
-            context.drawImage(this.Image,
-                              (this.CurrentCol * this.Width),
-                              (this.CurrentRow * this.Height),
-                              this.Width,this.Height,
-                              this.XPosition,
-                              this.YPosition,
-                              this.Width,this.Height);
-        };
 };
+
+
+projectStella.ImgSprite.prototype.UpdateState = function()
+    {
+        var currentTime = new Date().getTime();
+        if(this.FlipSpeed > 0)
+        {
+            if((currentTime - this.LastFlippedTime) > flipSpeed)
+            {
+                this.CurrentCol++;
+                if(this.CurrentCol >= HPics)
+                    this.CurrentCol = 0;
+                    
+                this.LastFlippedTime = new Date().getTime();
+            }
+        }
+    };
+    
+projectStella.ImgSprite.prototype.Draw = function(context)
+    {
+        context.drawImage(this.Image,
+                          (this.CurrentCol * this.Width),
+                          (this.CurrentRow * this.Height),
+                          this.Width,this.Height,
+                          this.XPosition,
+                          this.YPosition,
+                          this.Width,this.Height);
+    };

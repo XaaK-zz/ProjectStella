@@ -57,23 +57,25 @@ projectStella.Game = function(level)
 projectStella.Game.prototype.Update = function()
     {
         this.WorldObj.Update();
+        this.SpellBook.Update();
+        this.ActionSection.Update();
+        
+        this.Display();
+    };
+    
+projectStella.Game.prototype.Update = function()
+    {
         this.WorldObj.Display();
         this.SpellBook.Display();
         this.ActionSection.Display();
     };
-    
 
 projectStella.Game.prototype.HandleSpellbookClick = function(e)
     {
         this.SpellBook.HandleClick(e);
-    }
+    };
 
 projectStella.Game.prototype.HandleActionClick = function(e)
     {
-        if(this.SpellBook.SelectedItem != null)
-        {
-            //Have a spell selected - check to see if this is a valid placement
-            
-            
-        }
-    }
+        this.ActionSection.HandleClick(e,this.SpellBook.SelectedItem);
+    };

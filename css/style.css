@@ -39,7 +39,7 @@ body
 	
 }
 
-#playSpace #canvas
+#playSpace #worldCanvas
 {
 	border: 2px solid black;
 }

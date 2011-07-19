@@ -6,6 +6,7 @@ goog.provide('projectStella.SpellBook');
 
 goog.require('projectStella.DisplayableCanvas');
 goog.require('projectStella.ImgSprite');
+goog.require('projectStella.SpellIcon');
 
 goog.require('goog.events');
 goog.require('goog.math.Rect');
@@ -17,21 +18,18 @@ projectStella.SpellBook = function(width, height)
 
 goog.inherits(projectStella.SpellBook, projectStella.DisplayableCanvas);
 
-projectStella.SpellBook.prototype.Init = function(canvasID)
+projectStella.SpellBook.prototype.Init = function(canvasID,level)
     {
         projectStella.SpellBook.superClass_.Init.call(this,canvasID);
         
-        var moveForwardIcon = new projectStella.ImgSprite("img/Icon_MoveForward2.jpg",10,20,1,0,32,32,0,0,-1);
-        moveForwardIcon.Click = function ()
-        {
-            if(this.CurrentCol == 1)
-                this.CurrentCol = 0;
-            else
-                this.CurrentCol = 1; 
-        };
-        this.DisplayList.push(moveForwardIcon);
-        this.DisplayList.push(new projectStella.ImgSprite("img/Icon_TurnRight.jpg",50,20,0,0,32,32,0,0,-1));
-        this.DisplayList.push(new projectStella.ImgSprite("img/Icon_TurnLeft.jpg",90,20,0,0,32,32,0,0,-1));
+        //var moveForwardIcon = new projectStella.ImgSprite("img/Icon_MoveForward2.jpg",10,20,1,0,32,32,0,0,-1);
+        //var moveForwardIcon = new projectStella.SpellIcon(1);
+        
+        this.DisplayList.push(new projectStella.SpellIcon(1));
+        //this.DisplayList.push(new projectStella.ImgSprite("img/Icon_TurnRight.jpg",50,20,0,0,32,32,0,0,-1));
+        //this.DisplayList.push(new projectStella.ImgSprite("img/Icon_TurnLeft.jpg",90,20,0,0,32,32,0,0,-1));
+        this.DisplayList.push(new projectStella.SpellIcon(2));
+        this.DisplayList.push(new projectStella.SpellIcon(3));
         this.SelectedItem = null;
         
     };
@@ -64,7 +62,7 @@ projectStella.SpellBook.prototype.HandleClick = function(e)
                 //Push click to sprite
                 this.DisplayList[x].Click();
                 //Handle logic for selecting item
-                this.SelectedItem = x;
+                this.SelectedItem = this.DisplayList[x];
                 return;   
             }
             
