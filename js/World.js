@@ -1,11 +1,24 @@
-// Copyright © Zach Greenvoss 
-// Licensed under the MIT license - http://www.opensource.org/licenses/mit-license.php
-
+/**
+ * @fileOverview This file has functions related to the World object.
+ * @author Zach Greenvoss
+ * @version 1.0
+ * Copyright © Zach Greenvoss 
+ * Licensed under the MIT license - http://www.opensource.org/licenses/mit-license.php
+ */
 goog.provide('projectStella.World');
 
 goog.require('projectStella.DisplayableCanvas');
 goog.require('projectStella.ImgSprite');
 
+/**
+ * Constructor for a World object.
+ * @class Acts as the Controller object for the World canvas.<br>
+ *  This is the canvas/controller that displays the level objects and dragon.
+ * @param {number} width Horizontal size of the World canvas display in pixels.
+ * @param {number} height Vertical size of the World canvas display in pixels.
+ * @constructor
+ * @extends {projectStella.DisplayableCanvas}
+ */
 projectStella.World = function(width, height)
     {
         projectStella.DisplayableCanvas.call(this,width, height);
@@ -13,6 +26,35 @@ projectStella.World = function(width, height)
 
 goog.inherits(projectStella.World, projectStella.DisplayableCanvas);
 
+/**
+ * Init the canvas object
+ * @param {string} canvasID Document ID of the World canvas element.
+ * @param {number} level Current level - used to determine what spells to load
+ */
+projectStella.World.prototype.Init = function(canvasID,level)
+    {
+        projectStella.World.superClass_.Init.call(this,canvasID);
+        
+        //always build basic grass background (for now)
+        for(x=0;x<40;x++)
+        {
+             for(y=0;y<20;y++)
+             {
+                 this.DisplayList.push(new projectStella.ImgSprite("img/grass.jpg",(x*16),(y*16),
+                                                                    3,5,16,16,Math.floor(Math.random()*3),
+                                                                    Math.floor(Math.random()*4),-1));
+             }
+        }
+        
+        if(level == 1)
+        {
+            //TODO - load level specific details
+        }
+    };
+
+/**
+ * Display the World Section
+ */    
 projectStella.World.prototype.Display = function()
     {
         projectStella.World.superClass_.Display.call(this);
@@ -25,19 +67,6 @@ projectStella.World.prototype.Display = function()
                 this.context.strokeRect((x*32), (y*32), 32, 32);
             }
         }
-    };
-        
-projectStella.World.prototype.BuildBackground = function()
-    {
-       //Build Background
-       for(x=0;x<40;x++)
-       {
-            for(y=0;y<20;y++)
-            {
-                this.DisplayList.push(new projectStella.ImgSprite("img/grass.jpg" ,  (x*16),(y*16),3,5,16,16,Math.floor(Math.random()*3),Math.floor(Math.random()*4),-1));
-            }
-       }
-        
     };
 
 

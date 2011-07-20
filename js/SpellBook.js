@@ -1,39 +1,58 @@
-// Copyright © Zach Greenvoss 
-// Licensed under the MIT license - http://www.opensource.org/licenses/mit-license.php
-
+/**
+ * @fileOverview This file has functions related to the SpellBook object.
+ * @author Zach Greenvoss
+ * @version 1.0
+ * Copyright © Zach Greenvoss 
+ * Licensed under the MIT license - http://www.opensource.org/licenses/mit-license.php
+ */
 goog.provide('projectStella.SpellBook');
-
 
 goog.require('projectStella.DisplayableCanvas');
 goog.require('projectStella.ImgSprite');
 goog.require('projectStella.SpellIcon');
+goog.require('projectStella.SpellIconType');
 
 goog.require('goog.events');
 goog.require('goog.math.Rect');
 
+/**
+ * Constructor for an SpellBook object.
+ * @class Acts as the Controller object for the Spellbook canvas
+ * @param {number} width Horizontal size of the Spellbook canvas display in pixels.
+ * @param {number} height Vertical size of the Spellbook canvas display in pixels.
+ * @constructor
+ * @extends {projectStella.DisplayableCanvas}
+ */
 projectStella.SpellBook = function(width, height)
     {
         projectStella.DisplayableCanvas.call(this,width, height);
     };
-
 goog.inherits(projectStella.SpellBook, projectStella.DisplayableCanvas);
 
+/**
+ * Init the canvas object
+ * @param {string} canvasID Document ID of the Spellbook canvas element.
+ * @param {number} level Current level - used to determine what spells to load
+ */
 projectStella.SpellBook.prototype.Init = function(canvasID,level)
     {
         projectStella.SpellBook.superClass_.Init.call(this,canvasID);
         
-        //var moveForwardIcon = new projectStella.ImgSprite("img/Icon_MoveForward2.jpg",10,20,1,0,32,32,0,0,-1);
-        //var moveForwardIcon = new projectStella.SpellIcon(1);
+        if(level == 1)
+        {
+            //Load defaults
+            this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.MoveForward));
+            this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.TurnRight));
+            this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.TurnLeft));
+        }
         
-        this.DisplayList.push(new projectStella.SpellIcon(1));
-        //this.DisplayList.push(new projectStella.ImgSprite("img/Icon_TurnRight.jpg",50,20,0,0,32,32,0,0,-1));
-        //this.DisplayList.push(new projectStella.ImgSprite("img/Icon_TurnLeft.jpg",90,20,0,0,32,32,0,0,-1));
-        this.DisplayList.push(new projectStella.SpellIcon(2));
-        this.DisplayList.push(new projectStella.SpellIcon(3));
         this.SelectedItem = null;
         
     };
 
+/**
+ * Display the Spellbook Section
+ */
 projectStella.SpellBook.prototype.Display = function()
     {
         this.context.fillStyle = "#e3ceaf";
@@ -46,11 +65,16 @@ projectStella.SpellBook.prototype.Display = function()
         projectStella.SpellBook.superClass_.Display.call(this);
     };
 
+/**
+ * Called by the framework when the user clicks on the Spellbook section.<br>
+ *  Checks to see if the user clicked on a valid spell.<br>
+ *  Sets the selected spell as selected.
+ * @param {Event}e Event object from the click event.
+ */
 projectStella.SpellBook.prototype.HandleClick = function(e)
     {
         var clickRect = new goog.math.Rect(e.offsetX,e.offsetY,10,10);
-        //this.context.fillStyle = "rgb(255,255,255)";
-        //this.context.fillRect(x, y, 20, 20);
+        
         for(x=0;x<this.DisplayList.length;x++)
         {
             var displayRect = new goog.math.Rect(this.DisplayList[x].XPosition,
