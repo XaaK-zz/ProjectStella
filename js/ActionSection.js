@@ -62,6 +62,13 @@ projectStella.ActionSection = function(width, height)
             * @protected
         */
         this.ActionList = [];
+        
+        /**
+            * Collection of valid placement nodes
+            * @type {Array.<number>}
+            * @protected
+        */
+        this.ValidPlacement = [];
     };
 goog.inherits(projectStella.ActionSection, projectStella.DisplayableCanvas);
 
@@ -71,7 +78,13 @@ goog.inherits(projectStella.ActionSection, projectStella.DisplayableCanvas);
  */
 projectStella.ActionSection.prototype.Init = function(canvasID)
     {
-        projectStella.ActionSection.superClass_.Init.call(this,canvasID);   
+        projectStella.ActionSection.superClass_.Init.call(this,canvasID);
+        
+        //Add first valid location
+        var ballIcon = new projectStella.ImgSprite("img/GreenBall.gif",1,25,0,0,13,13,0,0,-1);
+        this.DisplayList.push(ballIcon);
+        
+        this.ValidPlacement.push(0);
     };
 
 /**
@@ -109,6 +122,8 @@ projectStella.ActionSection.prototype.HandleClick = function(e,selectedSpell)
         //if no spell - return
         if(!selectedSpell)
             return;
+        if(!selectedSpell.Selected)
+            return;
         
         //Check to see if we are in a valid square
         var clickRect = new goog.math.Rect(e.offsetX,e.offsetY,10,10);
@@ -116,17 +131,33 @@ projectStella.ActionSection.prototype.HandleClick = function(e,selectedSpell)
         {
             for(y=0;y<this.NumberSquaresY;y++)
             {
-                var displayRect = new goog.math.Rect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
-                                                    this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
-                                                    this.SquareSize, 
-                                                    this.SquareSize);
-                if(clickRect.intersects(displayRect))
+                //Check that this is a valid "next step"
+                if(this.ValidPlacement.indexOf((this.NumberSquaresY*y)+x) != -1)
                 {
-                    //found a match inside a square - now check to see if a valid placement
-                    var actionIcon = new projectStella.ActionIcon(selectedSpell,(x*y)+x,displayRect);
-                    this.DisplayList.push(actionIcon);
-                    
-                    selectedSpell.SetUnSelected();
+                    var displayRect = new goog.math.Rect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
+                                                        this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
+                                                        this.SquareSize, 
+                                                        this.SquareSize);
+                    if(clickRect.intersects(displayRect))
+                    {
+                        //found a match inside a square - now check to see if a valid placement
+                        var actionIcon = new projectStella.ActionIcon(selectedSpell,(this.NumberSquaresY*y)+x,displayRect);
+                        this.DisplayList.push(actionIcon);
+                        
+                        selectedSpell.SetUnSelected();
+                        
+                        //Add next indicator
+                        var ballIcon = new projectStella.ImgSprite("img/GreenBall.gif",
+                                                    this.OffsetStartX + ((x+1)*this.SquareSize) + ((x+1)*this.OffsetStartX) - 14,
+                                                    this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY) + 10,
+                                                    0,0,13,13,0,0,-1);
+                        
+                        this.DisplayList.push(ballIcon);
+                        
+                        //NOTE - not handling end of row yet
+                        this.ValidPlacement.splice(this.ValidPlacement.indexOf((this.NumberSquaresY*y)+x));
+                        this.ValidPlacement.push((this.NumberSquaresY*y)+x+1);
+                    }
                 }
             }
         }
