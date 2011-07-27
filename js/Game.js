@@ -37,16 +37,62 @@ projectStella.Game = function(level)
         */
         this.Level = level;
         
+        var worldWidth;
+        var worldHeight;
+        var worldCellX;
+        var worldCellY;
+        
+        var actionSectionWidth;
+        var actionSectionHeight;
+        
+        //Figure out world sizes based on level
+        switch(this.Level)
+        {
+            case 1:
+                worldCellX = 20;
+                worldCellY = 10;
+                worldWidth = (worldCellX * 16);
+                worldHeight = (worldCellY * 16);
+                
+                actionSectionCellX = 5;
+                actionSectionCellY = 2;
+                
+                break;
+        }
+        
+        //Create various objects for controlling game
+        /**
+            * Controller object for the game level canvas
+            * @type {projectStella.World}
+            * @public
+        */
+        this.WorldObj = new projectStella.World(level,worldCellX,worldCellY);
+        
+         /**
+            * Controller object for the action section canvas
+            * @type {projectStella.ActionSection}
+            * @public
+        */
+        this.ActionSection= new projectStella.ActionSection(actionSectionCellX,actionSectionCellY);
+        
+        /**
+            * Controller object for the spellbook canvas
+            * @type {projectStella.SpellBook}
+            * @public
+        */
+        this.SpellBook = new projectStella.SpellBook(132,100);
+        
+        
         //Create canvas dom objects///////////////////
         var section = document.getElementById('playSpace');
-        var worldCanvas = goog.dom.createDom('canvas', {'id':'worldCanvas','width': '640', 'height':'320'});
+        var worldCanvas = goog.dom.createDom('canvas', {'id':'worldCanvas','width': this.WorldObj.width, 'height':this.WorldObj.height});
         goog.dom.appendChild(section, worldCanvas);
         goog.dom.appendChild(section, goog.dom.createDom('br'));
         
         var nobrElem = goog.dom.createDom('nobr');
         goog.dom.appendChild(section, nobrElem);
                              
-        var actionCanvas = goog.dom.createDom('canvas', {'id':'actionCanvas','width': '490', 'height':'200'});
+        var actionCanvas = goog.dom.createDom('canvas', {'id':'actionCanvas','width': this.ActionSection.width, 'height':this.ActionSection.height});
         goog.dom.appendChild(nobrElem, actionCanvas);
         
         goog.dom.appendChild(nobrElem, goog.dom.createTextNode('\u00a0\u00a0'));
@@ -55,30 +101,12 @@ projectStella.Game = function(level)
         goog.dom.appendChild(nobrElem, spellBookCanvas);
         //////////////////////////////////////////
         
-        //Create various objects for controlling game
-        /**
-            * Controller object for the game level canvas
-            * @type {projectStella.World}
-            * @public
-        */
-        this.WorldObj = new projectStella.World();
-        this.WorldObj.Init("worldCanvas",level);
+        //Now init various objects...
+        this.WorldObj.Init("worldCanvas");
         
-        /**
-            * Controller object for the action section canvas
-            * @type {projectStella.ActionSection}
-            * @public
-        */
-        this.ActionSection= new projectStella.ActionSection(490,200);
         this.ActionSection.Init("actionCanvas");
         goog.events.listen(this.ActionSection.canvasItem, goog.events.EventType.CLICK, this.HandleActionClick, false, this);
         
-        /**
-            * Controller object for the spellbook canvas
-            * @type {projectStella.SpellBook}
-            * @public
-        */
-        this.SpellBook = new projectStella.SpellBook(132,100);
         this.SpellBook.Init("spellBookCanvas",level);
         goog.events.listen(this.SpellBook.canvasItem, goog.events.EventType.CLICK, this.HandleSpellbookClick, false, this);
         

@@ -20,10 +20,8 @@ goog.require('projectStella.ActionIcon');
  * @constructor
  * @extends {projectStella.DisplayableCanvas}
  */
-projectStella.ActionSection = function(width, height)
+projectStella.ActionSection = function(sizeX, sizeY)
     {
-        projectStella.DisplayableCanvas.call(this,width, height);
-        
         //rendering settings
         /**
             * OffsetStartX.
@@ -48,13 +46,13 @@ projectStella.ActionSection = function(width, height)
             * @type {number}
             * @protected
         */
-        this.NumberSquaresX = 10;
+        this.NumberSquaresX = sizeX;
         /**
             * Number of action squares vertically
             * @type {number}
             * @protected
         */
-        this.NumberSquaresY = 4;
+        this.NumberSquaresY = sizeY;
         
         /**
             * Collection of placed action icons.
@@ -69,6 +67,12 @@ projectStella.ActionSection = function(width, height)
             * @protected
         */
         this.ValidPlacement = [];
+        
+        var widthTemp = (this.NumberSquaresX * this.SquareSize) + ((this.NumberSquaresX+1) * this.OffsetStartX);
+        var heightTemp = (this.NumberSquaresY * this.SquareSize) + ((this.NumberSquaresY+1) * this.OffsetStartX);
+        
+        projectStella.DisplayableCanvas.call(this,widthTemp, heightTemp);
+       
     };
 goog.inherits(projectStella.ActionSection, projectStella.DisplayableCanvas);
 
@@ -100,12 +104,35 @@ projectStella.ActionSection.prototype.Display = function()
         {
             for(y=0;y<this.NumberSquaresY;y++)
             {
-                this.context.strokeRect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
+                //Check to see if this is an active square
+                if(this.ValidPlacement.indexOf((this.NumberSquaresX*y)+x) != -1)
+                {
+                    this.context.fillStyle = "rgb(175,175,175)";
+                    this.context.fillRect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
                                         this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
                                         this.SquareSize, 
                                         this.SquareSize);
+                    this.context.strokeRect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
+                                        this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
+                                        this.SquareSize, 
+                                        this.SquareSize);
+                }
+                else
+                {
+                    this.context.strokeRect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
+                                        this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
+                                        this.SquareSize, 
+                                        this.SquareSize);
+                    //Debug Code
+                    //this.context.fillStyle = "#000";
+                    //this.context.fillText(((this.NumberSquaresX*y)+x),
+                    //                    this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
+                    //                    this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY));
+                                        
+                }
             }
         }
+        
         //Call super class to display any contained display list items
         projectStella.ActionSection.superClass_.Display.call(this);
     };
@@ -127,12 +154,12 @@ projectStella.ActionSection.prototype.HandleClick = function(e,selectedSpell)
         
         //Check to see if we are in a valid square
         var clickRect = new goog.math.Rect(e.offsetX,e.offsetY,10,10);
-        for(x=0;x<this.NumberSquaresX;x++)
+        for(y=0;y<this.NumberSquaresY;y++)
         {
-            for(y=0;y<this.NumberSquaresY;y++)
+            for(x=0;x<this.NumberSquaresX;x++)
             {
                 //Check that this is a valid "next step"
-                if(this.ValidPlacement.indexOf((this.NumberSquaresY*y)+x) != -1)
+                if(this.ValidPlacement.indexOf((this.NumberSquaresX*y)+x) != -1)
                 {
                     var displayRect = new goog.math.Rect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
                                                         this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
@@ -141,7 +168,7 @@ projectStella.ActionSection.prototype.HandleClick = function(e,selectedSpell)
                     if(clickRect.intersects(displayRect))
                     {
                         //found a match inside a square - now check to see if a valid placement
-                        var actionIcon = new projectStella.ActionIcon(selectedSpell,(this.NumberSquaresY*y)+x,displayRect);
+                        var actionIcon = new projectStella.ActionIcon(selectedSpell,(this.NumberSquaresX*y)+x,displayRect);
                         this.DisplayList.push(actionIcon);
                         
                         selectedSpell.SetUnSelected();
@@ -154,8 +181,7 @@ projectStella.ActionSection.prototype.HandleClick = function(e,selectedSpell)
                         
                         this.DisplayList.push(ballIcon);
                         
-                        //NOTE - not handling end of row yet
-                        this.ValidPlacement.splice(this.ValidPlacement.indexOf((this.NumberSquaresY*y)+x));
+                        this.ValidPlacement.splice(this.ValidPlacement.indexOf((this.NumberSquaresX*y)+x));
                         this.ValidPlacement.push((this.NumberSquaresY*y)+x+1);
                     }
                 }

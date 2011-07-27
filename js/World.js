@@ -19,9 +19,33 @@ goog.require('projectStella.ImgSprite');
  * @constructor
  * @extends {projectStella.DisplayableCanvas}
  */
-projectStella.World = function(width, height)
+projectStella.World = function(level,sizeX,sizeY)
     {
-        projectStella.DisplayableCanvas.call(this,width, height);
+        /**
+        * Level currently being represented by this world object
+        * @type {Number}
+        * @public
+        */
+        this.Level = level;
+        
+        /**
+        * Number of cell nodes in the horizontal direction
+        * @type {Number}
+        * @public
+        */
+        this.SizeX = sizeX;
+        
+        /**
+        * Number of cell nodes in the vertical direction
+        * @type {Number}
+        * @public
+        */
+        this.SizeY = sizeY;
+        
+        var widthTemp = this.SizeX * 16;
+        var heightTemp = this.SizeY * 16;
+        
+        projectStella.DisplayableCanvas.call(this,widthTemp, heightTemp);
     };
 
 goog.inherits(projectStella.World, projectStella.DisplayableCanvas);
@@ -31,14 +55,14 @@ goog.inherits(projectStella.World, projectStella.DisplayableCanvas);
  * @param {string} canvasID Document ID of the World canvas element.
  * @param {number} level Current level - used to determine what spells to load
  */
-projectStella.World.prototype.Init = function(canvasID,level)
+projectStella.World.prototype.Init = function(canvasID)
     {
         projectStella.World.superClass_.Init.call(this,canvasID);
         
         //always build basic grass background (for now)
-        for(x=0;x<40;x++)
+        for(x=0;x<this.SizeX;x++)
         {
-             for(y=0;y<20;y++)
+             for(y=0;y<this.SizeY;y++)
              {
                  this.DisplayList.push(new projectStella.ImgSprite("img/grass.jpg",(x*16),(y*16),
                                                                     3,5,16,16,Math.floor(Math.random()*3),
@@ -46,7 +70,7 @@ projectStella.World.prototype.Init = function(canvasID,level)
              }
         }
         
-        if(level == 1)
+        if(this.Level == 1)
         {
             //TODO - load level specific details
         }
