@@ -9,6 +9,7 @@ goog.provide('projectStella.World');
 
 goog.require('projectStella.DisplayableCanvas');
 goog.require('projectStella.ImgSprite');
+goog.require('projectStella.GameSprite');
 
 /**
  * Constructor for a World object.
@@ -42,6 +43,13 @@ projectStella.World = function(level,sizeX,sizeY)
         */
         this.SizeY = sizeY;
         
+        /**
+        * Player character icon on the world map
+        * @type {projectStella.GameSprite}
+        * @public
+        */
+        this.MainCharacter = null;
+        
         var widthTemp = this.SizeX * 16;
         var heightTemp = this.SizeY * 16;
         
@@ -72,7 +80,12 @@ projectStella.World.prototype.Init = function(canvasID)
         
         if(this.Level == 1)
         {
-            //TODO - load level specific details
+            //Setup main character
+            this.MainCharacter = new projectStella.GameSprite(projectStella.GameSpriteType.MainCharacter,3,3);
+            this.DisplayList.push(this.MainCharacter);
+            
+            //create other map elements - TODO
+            
         }
     };
 

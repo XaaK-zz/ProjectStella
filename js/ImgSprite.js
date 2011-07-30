@@ -53,7 +53,7 @@ projectStella.ImgSprite = function(img,XPos,YPos,HPics,VPics,xSize,ySize,
         * @type {number}
         * @public
     */
-    this.HPics - HPics;
+    this.HPics = HPics;
     
     /**
         * Number of animation types
@@ -114,10 +114,10 @@ projectStella.ImgSprite.prototype.UpdateState = function()
         var currentTime = new Date().getTime();
         if(this.FlipSpeed > 0)
         {
-            if((currentTime - this.LastFlippedTime) > flipSpeed)
+            if((currentTime - this.LastFlippedTime) > this.FlipSpeed)
             {
                 this.CurrentCol++;
-                if(this.CurrentCol >= HPics)
+                if(this.CurrentCol >= this.HPics)
                     this.CurrentCol = 0;
                     
                 this.LastFlippedTime = new Date().getTime();
