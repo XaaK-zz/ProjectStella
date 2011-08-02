@@ -62,11 +62,11 @@ projectStella.ActionSection = function(sizeX, sizeY)
         this.ActionList = [];
         
         /**
-            * Collection of cells that are active
-            * @type {Array.<number>}
-            * @protected
+            * Cell is that current executing
+            * @type number
+            * @public
         */
-        this.HighlightList = [];
+        this.ActiveCell = -1;
         
         /**
             * Collection of valid placement nodes
@@ -125,7 +125,8 @@ projectStella.ActionSection.prototype.Display = function()
                                         this.SquareSize, 
                                         this.SquareSize);
                 }
-                else if(this.HighlightList.indexOf((this.NumberSquaresX*y)+x) != -1)
+                //else if(this.HighlightList.indexOf((this.NumberSquaresX*y)+x) != -1)
+                else if(this.ActiveCell == ((this.NumberSquaresX*y)+x))
                 {
                     this.context.strokeStyle = "rgb(0,0,200)";
                     this.context.strokeRect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
@@ -194,6 +195,8 @@ projectStella.ActionSection.prototype.HandleClick = function(e,selectedSpell)
                         
                         this.ValidPlacement.splice(this.ValidPlacement.indexOf((this.NumberSquaresX*y)+x));
                         this.ValidPlacement.push((this.NumberSquaresY*y)+x+1);
+                        
+                        this.ActionList.push(actionIcon);
                     }
                 }
             }
@@ -206,10 +209,12 @@ projectStella.ActionSection.prototype.HandleClick = function(e,selectedSpell)
  */
 projectStella.ActionSection.prototype.HighlightNextSpell = function()
     {
-        if(this.HighlightList.length == 0)
+        //if(this.HighlightList.length == 0)
+        if(this.ActiveCell == -1)
         {
             //Beginning
-            this.HighlightList.push(0);
+            //this.HighlightList.push(0);
+            this.ActiveCell = 0;
         }
     };
     

@@ -171,6 +171,20 @@ projectStella.Game.prototype.StartAnimation = function()
         
         //Select the first cell as the active spell
         this.ActionSection.HighlightNextSpell();
+        
+        //Tell the main character to "do" the first action
+        this.WorldObj.MainCharacter.ApplySpell(this.ActionSection,this.DoneMoving);
+    };
+  
+  
+projectStella.Game.prototype.DoneMoving = function()
+    {
+        //TODO - the this keyword is pointing at wrong object in this method when invoked in callback...
+        //Select the first cell as the active spell
+        //this.ActionSection.HighlightNextSpell();
+        
+        //Tell the main character to "do" the next action
+        //this.WorldObj.MainCharacter.ApplySpell(this.ActionSection,this.DoneMoving);
     };
     
 /**
