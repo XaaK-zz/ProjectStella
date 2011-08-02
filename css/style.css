@@ -48,3 +48,10 @@ body
 {
 	vertical-align: top;
 }
+
+
+.GoButton 
+{
+  height: 40px;
+  width: 40px;
+}

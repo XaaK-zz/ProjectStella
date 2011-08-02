@@ -14,7 +14,7 @@ goog.require('projectStella.ImgSprite');
 goog.require('projectStella.ActionSection');
 goog.require('projectStella.SpellBook');
 goog.require('goog.dom');
-
+goog.require('goog.ui.Button');
 /**
  * @namespace Base namespace for the projectStella library.  
  * @const
@@ -82,6 +82,12 @@ projectStella.Game = function(level)
         */
         this.SpellBook = new projectStella.SpellBook(132,100);
         
+        /**
+            * Boolean flag indicating if we are currently showing the results of a computation
+            * @type {boolean}
+            * @public
+        */
+        this.CurrentlyAnimating = false;
         
         //Create canvas dom objects///////////////////
         var section = document.getElementById('playSpace');
@@ -99,6 +105,14 @@ projectStella.Game = function(level)
         
         var spellBookCanvas = goog.dom.createDom('canvas', {'id':'spellBookCanvas','width': '132', 'height':'100'});
         goog.dom.appendChild(nobrElem, spellBookCanvas);
+        
+        goog.dom.appendChild(section, goog.dom.createDom('br'));
+        var buttonGo = goog.dom.createDom('button', {'type':'button','id':'goButton','class':'GoButton'});
+        goog.dom.appendChild(buttonGo, goog.dom.createTextNode('GO!'));
+        goog.dom.appendChild(section, buttonGo);
+        
+        goog.events.listen(buttonGo, goog.events.EventType.CLICK, this.HandleGoClick,false,this);
+ 
         //////////////////////////////////////////
         
         //Now init various objects...
@@ -148,6 +162,18 @@ projectStella.Game.prototype.Display = function()
     };
 
 /**
+ * Kicks off the current stored computation
+ */  
+projectStella.Game.prototype.StartAnimation = function()
+    {
+        //Flip flag to indicate we are busy
+        this.CurrentlyAnimating = true;
+        
+        //Select the first cell as the active spell
+        this.ActionSection.HighlightNextSpell();
+    };
+    
+/**
  * Handler function - called when the user clicks on the Spellbook canvas
  * @param {event}e MouseClick event argument 
  */
@@ -163,4 +189,19 @@ projectStella.Game.prototype.HandleSpellbookClick = function(e)
 projectStella.Game.prototype.HandleActionClick = function(e)
     {
         this.ActionSection.HandleClick(e,this.SpellBook.SelectedItem);
+    };
+    
+/**
+ * Handler function - called when the user clicks on the GO button
+ *  Should kick off computation
+ * @param {event}e MouseClick event argument 
+ */
+projectStella.Game.prototype.HandleGoClick = function(e)
+    {
+        if(this.CurrentlyAnimating)
+            return; //Don't do anything if in the middle of animation
+        else
+        {
+            this.StartAnimation();
+        }
     };

@@ -62,6 +62,13 @@ projectStella.ActionSection = function(sizeX, sizeY)
         this.ActionList = [];
         
         /**
+            * Collection of cells that are active
+            * @type {Array.<number>}
+            * @protected
+        */
+        this.HighlightList = [];
+        
+        /**
             * Collection of valid placement nodes
             * @type {Array.<number>}
             * @protected
@@ -108,6 +115,7 @@ projectStella.ActionSection.prototype.Display = function()
                 if(this.ValidPlacement.indexOf((this.NumberSquaresX*y)+x) != -1)
                 {
                     this.context.fillStyle = "rgb(175,175,175)";
+                    this.context.strokeStyle = "#EEE";
                     this.context.fillRect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
                                         this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
                                         this.SquareSize, 
@@ -117,18 +125,21 @@ projectStella.ActionSection.prototype.Display = function()
                                         this.SquareSize, 
                                         this.SquareSize);
                 }
-                else
+                else if(this.HighlightList.indexOf((this.NumberSquaresX*y)+x) != -1)
                 {
+                    this.context.strokeStyle = "rgb(0,0,200)";
                     this.context.strokeRect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
                                         this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
                                         this.SquareSize, 
                                         this.SquareSize);
-                    //Debug Code
-                    //this.context.fillStyle = "#000";
-                    //this.context.fillText(((this.NumberSquaresX*y)+x),
-                    //                    this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
-                    //                    this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY));
-                                        
+                }
+                else
+                {
+                    this.context.strokeStyle = "#EEE";
+                    this.context.strokeRect(this.OffsetStartX + (x*this.SquareSize) + (x*this.OffsetStartX),
+                                        this.OffsetStartY + (y*this.SquareSize) + (y*this.OffsetStartY),
+                                        this.SquareSize, 
+                                        this.SquareSize);
                 }
             }
         }
@@ -189,4 +200,16 @@ projectStella.ActionSection.prototype.HandleClick = function(e,selectedSpell)
         }
     };
     
+/**
+ * Called when the game is animating the computation
+ *  Should set the next cell as active
+ */
+projectStella.ActionSection.prototype.HighlightNextSpell = function()
+    {
+        if(this.HighlightList.length == 0)
+        {
+            //Beginning
+            this.HighlightList.push(0);
+        }
+    };
     
