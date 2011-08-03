@@ -215,6 +215,28 @@ projectStella.ActionSection.prototype.HighlightNextSpell = function()
             //Beginning
             //this.HighlightList.push(0);
             this.ActiveCell = 0;
+            return true;
         }
+        else
+        {
+            //logic to detect next active spell
+            if(this.ActionList.length > this.ActiveCell+1)
+            {
+                this.ActiveCell++;
+                return true;
+            }
+            else
+            {
+                return false;    
+            }
+        }
+    };
+
+/**
+ * Called when computation completed - performs whatever cleanup necessary
+ */
+projectStella.ActionSection.prototype.Reset = function()
+    {
+        this.ActiveCell = -1;    
     };
     

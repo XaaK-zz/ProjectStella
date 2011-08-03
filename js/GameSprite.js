@@ -47,6 +47,7 @@ projectStella.GameSprite = function(spriteType,cellX,cellY)
     this.DestinationCellX = -1;
     this.DestinationCellY = -1;
     this.CallBackFunction = null;
+    this.GameObj = null;
     
     switch(spriteType)
     {
@@ -68,9 +69,11 @@ projectStella.GameSprite.prototype.UpdateState = function()
                 this.YPosition -= this.MoveSpeed;
                 if(this.YPosition <= (this.DestinationCellY * 32))
                 {
+                    this.CellY = this.DestinationCellY;
                     this.YPosition = (this.DestinationCellY * 32);
                     this.MoveSpeed = 0;
-                    this.CallBackFunction();
+                    //this.CallBackFunction();
+                    this.CallBackFunction.call(this.GameObj);
                 }
                 break;
         }
@@ -80,7 +83,7 @@ projectStella.GameSprite.prototype.UpdateState = function()
     projectStella.GameSprite.superClass_.UpdateState.call(this);
 };
     
-projectStella.GameSprite.prototype.ApplySpell = function(actionSection,callback)
+projectStella.GameSprite.prototype.ApplySpell = function(actionSection,callback,gameObj)
 {
     if(actionSection.ActiveCell != -1)
     {
@@ -92,7 +95,7 @@ projectStella.GameSprite.prototype.ApplySpell = function(actionSection,callback)
             switch(currentSpell)
             {
                 case projectStella.SpellIconType.MoveForward:
-                    this.MoveSpeed = 10;
+                    this.MoveSpeed = 5;
                     this.DestinationCellY = this.CellY - 1;
                     break;
                 
@@ -105,6 +108,7 @@ projectStella.GameSprite.prototype.ApplySpell = function(actionSection,callback)
                     break;
             }
             
+            this.GameObj = gameObj;
             this.CallBackFunction = callback;
         }
     }

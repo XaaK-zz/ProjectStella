@@ -173,18 +173,26 @@ projectStella.Game.prototype.StartAnimation = function()
         this.ActionSection.HighlightNextSpell();
         
         //Tell the main character to "do" the first action
-        this.WorldObj.MainCharacter.ApplySpell(this.ActionSection,this.DoneMoving);
+        this.WorldObj.MainCharacter.ApplySpell(this.ActionSection,this.DoneMoving,this);
     };
   
-  
+/**
+ * Callback function - called when the current spell is done animating
+ */  
 projectStella.Game.prototype.DoneMoving = function()
     {
-        //TODO - the this keyword is pointing at wrong object in this method when invoked in callback...
-        //Select the first cell as the active spell
-        //this.ActionSection.HighlightNextSpell();
-        
-        //Tell the main character to "do" the next action
-        //this.WorldObj.MainCharacter.ApplySpell(this.ActionSection,this.DoneMoving);
+        //try to highlight the next cell
+        if(this.ActionSection.HighlightNextSpell())
+        {
+            //Tell the main character to "do" the next action
+            this.WorldObj.MainCharacter.ApplySpell(this.ActionSection,this.DoneMoving,this);
+        }
+        else
+        {
+            //no next action - finish
+            this.CurrentlyAnimating = false;
+            this.ActionSection.Reset();
+        }
     };
     
 /**
