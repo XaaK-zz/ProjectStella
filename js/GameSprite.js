@@ -53,8 +53,11 @@ projectStella.GameSprite = function(spriteType,cellX,cellY)
     {
         case projectStella.GameSpriteType.MainCharacter:
             //Main Character sprite
-            //projectStella.ImgSprite.call(this,"img/knight.gif",(this.CellX * 32),(this.CellY * 32),2,3,16,18,0,0,100);
             projectStella.ImgSprite.call(this,"img/dragon2.png",(this.CellX * 32),(this.CellY * 32),4,4,32,32,0,0,300);
+            break;
+         case projectStella.GameSpriteType.Gem:
+            //Gem Sprite
+            projectStella.ImgSprite.call(this,"img/Gem.png",(this.CellX * 32),(this.CellY * 32),0,0,32,32,0,0,-1);
             break;
     }
 };
@@ -225,7 +228,7 @@ projectStella.GameSpriteType =
   /**
    * Tree
    */
-  Tree: 2,
+  Gem: 2,
   
   /**
    * Wall

@@ -50,6 +50,13 @@ projectStella.World = function(level,sizeX,sizeY)
         */
         this.MainCharacter = null;
         
+        /**
+        * Gem - represents final square player must get to
+        * @type {projectStella.GameSprite}
+        * @public
+        */
+        this.FinalGem = null;
+        
         var widthTemp = this.SizeX * 16;
         var heightTemp = this.SizeY * 16;
         
@@ -80,6 +87,10 @@ projectStella.World.prototype.Init = function(canvasID)
         
         if(this.Level == 1)
         {
+            //Add final Gem location
+            this.FinalGem = new projectStella.GameSprite(projectStella.GameSpriteType.Gem,3,0);
+            this.DisplayList.push(this.FinalGem);
+            
             //Setup main character
             this.MainCharacter = new projectStella.GameSprite(projectStella.GameSpriteType.MainCharacter,3,3);
             this.DisplayList.push(this.MainCharacter);

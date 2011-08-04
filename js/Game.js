@@ -15,6 +15,8 @@ goog.require('projectStella.ActionSection');
 goog.require('projectStella.SpellBook');
 goog.require('goog.dom');
 goog.require('goog.ui.Button');
+goog.require('goog.ui.Dialog');
+
 /**
  * @namespace Base namespace for the projectStella library.  
  * @const
@@ -198,6 +200,22 @@ projectStella.Game.prototype.DoneMoving = function()
             //no next action - finish
             this.CurrentlyAnimating = false;
             this.ActionSection.Reset();
+            
+            //Check to see if we are on destination square
+            if(this.WorldObj.FinalGem.CellX == this.WorldObj.MainCharacter.CellX &&
+               this.WorldObj.FinalGem.CellY == this.WorldObj.MainCharacter.CellY)
+            {
+                //Finish!
+                var dialog1 = new goog.ui.Dialog();
+                dialog1.setContent('You Won the level!');
+                dialog1.setTitle('Good Job!');
+                dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.OK);
+                goog.events.listen(dialog1, goog.ui.Dialog.EventType.SELECT, function(e)
+                {
+                    //TODO - handle closing dialog - move to next level
+                });
+                dialog1.setVisible(true);
+            }
         }
     };
     
