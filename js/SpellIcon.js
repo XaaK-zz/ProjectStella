@@ -40,11 +40,11 @@ projectStella.SpellIcon = function(spellType)
             break;
         case projectStella.SpellIconType.TurnRight:
             //Turn Right
-            projectStella.ImgSprite.call(this,"img/Icon_TurnRight.jpg",50,20,0,0,32,32,0,0,-1);
+            projectStella.ImgSprite.call(this,"img/Icon_TurnRight2.jpg",50,20,1,0,32,32,0,0,-1);
             break;
         case projectStella.SpellIconType.TurnLeft:
             //Turn Left
-            projectStella.ImgSprite.call(this,"img/Icon_TurnLeft.jpg",90,20,0,0,32,32,0,0,-1);
+            projectStella.ImgSprite.call(this,"img/Icon_TurnLeft2.jpg",90,20,1,0,32,32,0,0,-1);
             break;
     }
 };

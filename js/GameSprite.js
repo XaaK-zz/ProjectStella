@@ -53,7 +53,8 @@ projectStella.GameSprite = function(spriteType,cellX,cellY)
     {
         case projectStella.GameSpriteType.MainCharacter:
             //Main Character sprite
-            projectStella.ImgSprite.call(this,"img/knight.gif",(this.CellX * 32),(this.CellY * 32),2,3,16,18,0,0,100);
+            //projectStella.ImgSprite.call(this,"img/knight.gif",(this.CellX * 32),(this.CellY * 32),2,3,16,18,0,0,100);
+            projectStella.ImgSprite.call(this,"img/dragon2.png",(this.CellX * 32),(this.CellY * 32),4,4,32,32,0,0,300);
             break;
     }
 };
@@ -72,6 +73,43 @@ projectStella.GameSprite.prototype.UpdateState = function()
                     this.CellY = this.DestinationCellY;
                     this.YPosition = (this.DestinationCellY * 32);
                     this.MoveSpeed = 0;
+                    this.FlipSpeed = 300;
+                    //this.CallBackFunction();
+                    this.CallBackFunction.call(this.GameObj);
+                }
+                break;
+            case projectStella.SpriteFacing.East:
+                this.XPosition += this.MoveSpeed;
+                if(this.XPosition >= (this.DestinationCellX * 32))
+                {
+                    this.CellX = this.DestinationCellX;
+                    this.XPosition = (this.DestinationCellX * 32);
+                    this.MoveSpeed = 0;
+                    this.FlipSpeed = 300;
+                    //this.CallBackFunction();
+                    this.CallBackFunction.call(this.GameObj);
+                }
+                break;
+            case projectStella.SpriteFacing.South:
+                this.YPosition += this.MoveSpeed;
+                if(this.YPosition >= (this.DestinationCellY * 32))
+                {
+                    this.CellY = this.DestinationCellY;
+                    this.YPosition = (this.DestinationCellY * 32);
+                    this.MoveSpeed = 0;
+                    this.FlipSpeed = 300;
+                    //this.CallBackFunction();
+                    this.CallBackFunction.call(this.GameObj);
+                }
+                break;
+            case projectStella.SpriteFacing.West:
+                this.XPosition -= this.MoveSpeed;
+                if(this.XPosition <= (this.DestinationCellX * 32))
+                {
+                    this.CellX = this.DestinationCellX;
+                    this.XPosition = (this.DestinationCellX * 32);
+                    this.MoveSpeed = 0;
+                    this.FlipSpeed = 300;
                     //this.CallBackFunction();
                     this.CallBackFunction.call(this.GameObj);
                 }
@@ -96,15 +134,73 @@ projectStella.GameSprite.prototype.ApplySpell = function(actionSection,callback,
             {
                 case projectStella.SpellIconType.MoveForward:
                     this.MoveSpeed = 5;
-                    this.DestinationCellY = this.CellY - 1;
+                    this.FlipSpeed = 100;
+                    
+                    switch(this.Facing)
+                    {
+                        case projectStella.SpriteFacing.North:
+                            this.DestinationCellY = this.CellY - 1;
+                            break;
+                         case projectStella.SpriteFacing.East:
+                            this.DestinationCellX = this.CellX + 1;
+                            break;
+                         case projectStella.SpriteFacing.South:
+                            this.DestinationCellY = this.CellY + 1;
+                            break;
+                         case projectStella.SpriteFacing.West:
+                            this.DestinationCellX = this.CellX - 1;
+                            break;
+                    }
+                    
+                    
                     break;
                 
                 case projectStella.SpellIconType.TurnRight:
-                    
+                    if(this.Facing == projectStella.SpriteFacing.North)
+                    {
+                        this.Facing = projectStella.SpriteFacing.East;
+                        this.CurrentRow = 1;
+                    }
+                    else if(this.Facing == projectStella.SpriteFacing.East)
+                    {
+                        this.Facing = projectStella.SpriteFacing.South;
+                        this.CurrentRow = 2;
+                    }
+                    else if(this.Facing == projectStella.SpriteFacing.South)
+                    {
+                        this.Facing = projectStella.SpriteFacing.West;
+                        this.CurrentRow = 3;
+                    }
+                    else if(this.Facing == projectStella.SpriteFacing.West)
+                    {
+                        this.Facing = projectStella.SpriteFacing.North;
+                        this.CurrentRow = 0;
+                    }
+                    callback.call(gameObj);
                     break;
                 
                 case projectStella.SpellIconType.TurnLeft:
-                    
+                    if(this.Facing == projectStella.SpriteFacing.North)
+                    {
+                        this.Facing = projectStella.SpriteFacing.West;
+                        this.CurrentRow = 3;
+                    }
+                    else if(this.Facing == projectStella.SpriteFacing.East)
+                    {
+                        this.Facing = projectStella.SpriteFacing.North;
+                        this.CurrentRow = 0;
+                    }
+                    else if(this.Facing == projectStella.SpriteFacing.South)
+                    {
+                        this.Facing = projectStella.SpriteFacing.East;
+                        this.CurrentRow = 1;
+                    }
+                    else if(this.Facing == projectStella.SpriteFacing.West)
+                    {
+                        this.Facing = projectStella.SpriteFacing.South;
+                        this.CurrentRow = 2;
+                    }
+                    callback.call(gameObj);
                     break;
             }
             

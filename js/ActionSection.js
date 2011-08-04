@@ -91,6 +91,11 @@ projectStella.ActionSection.prototype.Init = function(canvasID)
     {
         projectStella.ActionSection.superClass_.Init.call(this,canvasID);
         
+        this.ValidPlacement = [];
+        this.DisplayList = [];
+        this.ActiveCell = -1;
+        this.ActionList = [];
+        
         //Add first valid location
         var ballIcon = new projectStella.ImgSprite("img/GreenBall.gif",1,25,0,0,13,13,0,0,-1);
         this.DisplayList.push(ballIcon);

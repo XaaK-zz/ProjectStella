@@ -111,7 +111,13 @@ projectStella.Game = function(level)
         goog.dom.appendChild(buttonGo, goog.dom.createTextNode('GO!'));
         goog.dom.appendChild(section, buttonGo);
         
+        goog.dom.appendChild(section, goog.dom.createTextNode('\u00a0\u00a0'));
+        var buttonReset = goog.dom.createDom('button', {'type':'button','id':'resetButton','class':'GoButton'});
+        goog.dom.appendChild(buttonReset, goog.dom.createTextNode('Reset'));
+        goog.dom.appendChild(section, buttonReset);
+        
         goog.events.listen(buttonGo, goog.events.EventType.CLICK, this.HandleGoClick,false,this);
+        goog.events.listen(buttonReset, goog.events.EventType.CLICK, this.HandleResetClick,false,this);
  
         //////////////////////////////////////////
         
@@ -226,4 +232,25 @@ projectStella.Game.prototype.HandleGoClick = function(e)
         {
             this.StartAnimation();
         }
+    };
+    
+/**
+ * Handler function - called when the user clicks on the Reset button
+ *  Reset the current level
+ * @param {event}e MouseClick event argument 
+ */
+projectStella.Game.prototype.HandleResetClick = function(e)
+    {
+        this.CurrentlyAnimating = false;
+        this.SpellItemSelected = null;
+        this.WorldObj.Init("worldCanvas");
+        this.ActionSection.Init("actionCanvas");
+        //this.ActionSection.DisplayList = [];
+        if(this.SpellBook.SelectedItem)
+        {
+            this.SpellBook.SelectedItem.SetUnSelected();
+            this.SpellBook.SelectedItem = null;
+        }
+            
+        
     };
