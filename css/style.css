@@ -19,13 +19,13 @@ body
 #levelHeader
 {
 	left: 0;  
-	width: 100%; 
+	width: 100%;
+	text-align: center;  
 }
 
 #levelHeader header h1
 {  
         display: block;  
-        text-align: center;  
         text-decoration: none;  
         color: #777;  
 }

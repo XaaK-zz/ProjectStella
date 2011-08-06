@@ -128,7 +128,6 @@ projectStella.GameSprite.prototype.ApplySpell = function(actionSection,callback,
 {
     if(actionSection.ActiveCell != -1)
     {
-        //alert('ApplySpell');
         var currentSpellIcon = actionSection.ActionList[actionSection.ActiveCell];
         if(currentSpellIcon && currentSpellIcon.SpellIcon)
         {
@@ -142,16 +141,20 @@ projectStella.GameSprite.prototype.ApplySpell = function(actionSection,callback,
                     switch(this.Facing)
                     {
                         case projectStella.SpriteFacing.North:
-                            this.DestinationCellY = this.CellY - 1;
+                            if(this.CellY > 0)
+                                this.DestinationCellY = this.CellY - 1;
                             break;
                          case projectStella.SpriteFacing.East:
-                            this.DestinationCellX = this.CellX + 1;
+                            if(this.CellX < gameObj.WorldObj.SizeX-1)
+                                this.DestinationCellX = this.CellX + 1;
                             break;
                          case projectStella.SpriteFacing.South:
-                            this.DestinationCellY = this.CellY + 1;
+                            if(this.CellY < gameObj.WorldObj.SizeY-1)
+                                this.DestinationCellY = this.CellY + 1;
                             break;
                          case projectStella.SpriteFacing.West:
-                            this.DestinationCellX = this.CellX - 1;
+                            if(this.CellX > 0)
+                                this.DestinationCellX = this.CellX - 1;
                             break;
                     }
                     

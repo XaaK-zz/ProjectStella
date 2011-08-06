@@ -2,12 +2,40 @@
 <html>
 <head>
     <title>Project Stella</title>
-    <script type="text/javascript" src="js/Test.js"></script>
     <link href="css/style.css" rel="stylesheet" />
+    <script>
+        var gameObj;
+        
+        function Init()
+        {
+            gameObj = new projectStella.Game(1);
+        }
+    </script>
 </head>
-<body>
-    Welcome to Project Stella.<br>
-    This will be a full featured game site eventually - but for now we are just getting started...<br>
-    <a href="PlayLevel.html?Level=1">Go to First Level</a>
+<body onload="Init();">
+     <section id="levelHeader">
+        <header>
+            <img src="img/Title.png">
+        </header>
+    </section>
+    <section id="playSpace">
+        <a href="Intro.html">New Game</a><br>
+        <a href="Help.html">Help</a><br>
+        <a href="About.html">About</a><br>
+    </section>
+    
+        <img src="img/PrincessKnight.png" 
+        style="position:absolute; 
+        float:left; 
+        left:10px; 
+        bottom:0px; 
+        z-index:-1;"/>
+        <img src="img/OrangeBlossom2.png" 
+        style="position:absolute; 
+        float:right; 
+        right:0px; 
+        bottom:0px; 
+        z-index:-1;"/>
+
 </body>
 </html>

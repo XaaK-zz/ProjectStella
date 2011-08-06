@@ -51,8 +51,8 @@ projectStella.Game = function(level)
         switch(this.Level)
         {
             case 1:
-                worldCellX = 20;
-                worldCellY = 10;
+                worldCellX = 10;
+                worldCellY = 5;
                 worldWidth = (worldCellX * 16);
                 worldHeight = (worldCellY * 16);
                 

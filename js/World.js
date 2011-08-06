@@ -57,8 +57,8 @@ projectStella.World = function(level,sizeX,sizeY)
         */
         this.FinalGem = null;
         
-        var widthTemp = this.SizeX * 16;
-        var heightTemp = this.SizeY * 16;
+        var widthTemp = this.SizeX * 32;
+        var heightTemp = this.SizeY * 32;
         
         projectStella.DisplayableCanvas.call(this,widthTemp, heightTemp);
     };
@@ -75,9 +75,9 @@ projectStella.World.prototype.Init = function(canvasID)
         projectStella.World.superClass_.Init.call(this,canvasID);
         
         //always build basic grass background (for now)
-        for(x=0;x<this.SizeX;x++)
+        for(x=0;x<this.SizeX*2;x++)
         {
-             for(y=0;y<this.SizeY;y++)
+             for(y=0;y<this.SizeY*2;y++)
              {
                  this.DisplayList.push(new projectStella.ImgSprite("img/grass.jpg",(x*16),(y*16),
                                                                     3,5,16,16,Math.floor(Math.random()*3),
