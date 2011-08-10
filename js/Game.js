@@ -53,15 +53,58 @@ projectStella.Game = function(level)
             case 1:
                 worldCellX = 10;
                 worldCellY = 5;
-                worldWidth = (worldCellX * 16);
-                worldHeight = (worldCellY * 16);
+                
+                actionSectionCellX = 5;
+                actionSectionCellY = 2;
+                
+                var dialog1 = new goog.ui.Dialog();
+                dialog1.setContent('Your first spell is a basic Move.<br>It will move your Dragon one space forward the way it is facing.');
+                dialog1.setTitle('Move Forward Spell');
+                dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.OK);
+                dialog1.setVisible(true);
+                
+                break;
+            
+            case 2:
+                worldCellX = 10;
+                worldCellY = 5;
                 
                 actionSectionCellX = 5;
                 actionSectionCellY = 2;
                 
                 break;
+            
+            case 3:
+                worldCellX = 10;
+                worldCellY = 5;
+                
+                actionSectionCellX = 5;
+                actionSectionCellY = 2;
+                
+                var dialog1 = new goog.ui.Dialog();
+                dialog1.setContent('You have earned the turn spells.<br>These will rotate your Dragon to the right/left.');
+                dialog1.setTitle('Turn Spells');
+                dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.OK);
+                dialog1.setVisible(true);
+                
+                break;
+            
+             case 4:
+                worldCellX = 10;
+                worldCellY = 5;
+                
+                actionSectionCellX = 5;
+                actionSectionCellY = 2;
+                
+                break;
+            
         }
         
+        worldWidth = (worldCellX * 16);
+        worldHeight = (worldCellY * 16);
+                
+        this.ValidActionSection = true;
+                
         //Create various objects for controlling game
         /**
             * Controller object for the game level canvas
@@ -90,6 +133,15 @@ projectStella.Game = function(level)
             * @public
         */
         this.CurrentlyAnimating = false;
+        
+         /**
+            * Boolean flag indicating if the current spellbook is valid.
+            *   This gets set to false when the player tries to cast but fails to get to the goal.
+            *   A reset must be done
+            * @type {boolean}
+            * @public
+        */
+        this.ValidActionSection = true;
         
         //Create canvas dom objects///////////////////
         var section = document.getElementById('playSpace');
@@ -207,13 +259,25 @@ projectStella.Game.prototype.DoneMoving = function()
             {
                 //Finish!
                 var dialog1 = new goog.ui.Dialog();
-                dialog1.setContent('You Won the level!');
+                dialog1.setContent('You reached the goal!');
                 dialog1.setTitle('Good Job!');
                 dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.OK);
                 goog.events.listen(dialog1, goog.ui.Dialog.EventType.SELECT, function(e)
                 {
-                    //TODO - handle closing dialog - move to next level
-                });
+                    var newLevel = this.Level+1;
+                    window.location.href = "PlayLevel.html?Level=" + String(newLevel);
+                },false,this);
+                dialog1.setVisible(true);
+            }
+            else
+            {
+                //Failed to find goal - need to tell player and disable Go button
+                this.ValidActionSection = false;
+                
+                var dialog1 = new goog.ui.Dialog();
+                dialog1.setContent('You did not reach the goal.<br>Try again!');
+                dialog1.setTitle('Try again!');
+                dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.OK);
                 dialog1.setVisible(true);
             }
         }
@@ -246,6 +310,14 @@ projectStella.Game.prototype.HandleGoClick = function(e)
     {
         if(this.CurrentlyAnimating)
             return; //Don't do anything if in the middle of animation
+        else if(!this.ValidActionSection)
+        {
+            var dialog1 = new goog.ui.Dialog();
+            dialog1.setContent('Your Dragon needs to reach the goal with a single set of spells.<br>You will need to Reset and try again.');
+            dialog1.setTitle('Click Reset');
+            dialog1.setButtonSet(goog.ui.Dialog.ButtonSet.OK);
+            dialog1.setVisible(true);
+        }
         else
         {
             this.StartAnimation();
@@ -269,6 +341,6 @@ projectStella.Game.prototype.HandleResetClick = function(e)
             this.SpellBook.SelectedItem.SetUnSelected();
             this.SpellBook.SelectedItem = null;
         }
-            
+        this.ValidActionSection = true;
         
     };

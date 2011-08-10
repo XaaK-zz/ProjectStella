@@ -38,12 +38,23 @@ projectStella.SpellBook.prototype.Init = function(canvasID,level)
     {
         projectStella.SpellBook.superClass_.Init.call(this,canvasID);
         
-        if(level == 1)
+        switch(level)
         {
-            //Load defaults
-            this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.MoveForward));
-            this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.TurnRight));
-            this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.TurnLeft));
+            case 1:
+            case 2:
+                this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.MoveForward));
+                break;
+            case 3:
+            case 4:
+                this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.MoveForward));
+                this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.TurnRight));
+                this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.TurnLeft));
+                break;
+            default:
+                this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.MoveForward));
+                this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.TurnRight));
+                this.DisplayList.push(new projectStella.SpellIcon(projectStella.SpellIconType.TurnLeft));
+                break;
         }
         
         this.SelectedItem = null;

@@ -1,4 +1,33 @@
 Project Stella
 
-This is a HTML5 game designed to teach computational thinking skills to elementary-aged children.  I am also trying to learn HTML5 and javascript as part of the project.
+Developer: Zach Greenvoss
+	   z_greenvoss@hotmail.com
+
+Overview
+
+This is a HTML5 game designed to teach computational thinking skills to elementary-aged children.  In the game the player takes the role of a "Princess Knight" who must learn how to control Dragons.  The Dragon in the game can only be controlled through the use of "spells" placed by the player.  These spells represent very small instructions - they are only useful when combined together.  Progressing through the game will unlock progressively more complicated and powerful spells which will enable the player's Dragon to navigate increasingly sophisticated environments.
+
+Age Range
+
+The game is designed for 5-7 year olds.  Some of the later levels may challenge younger children in that age range.
+
+Supported Browsers
+
+The game requires a HTML5 capable browser.  The latest versions of Chrome and Firefox both have been tested to work with this game.
+
+Install
+
+This game does not make use of any server-side scripting, thus it does not need to be installed into a web server in order to run.  Simply opening index.html in a compatible browser will work.
+
+The game does require the google closure library to be downloaded locally.  This can be done by executing the "GetClosureLib" file - which will download the required code from google's servers.  Note this uses svn to get the files - if you do not have a svn client installed locally you will need to get one.
+
+License 
+
+This software was built as part of an Open Source Software development class through Portland State University.  All code is copyright Zach Greenvoss and distributed with the MIT Open Source license.  Please see the COPYING file for full details.
+
+Source Code
+
+The public repository for this project is located at http://github.com/XaaK/ProjectStella.  Please visit here for the latest news, updates, bug fixes, and to help contribute to the project.
+
+Thanks.
 

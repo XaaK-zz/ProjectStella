@@ -3,16 +3,29 @@
 <head>
     <title>Project Stella</title>
     <link href="css/style.css" rel="stylesheet" />
+   <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js" ></script>
     <script>
-        var gameObj;
-        
+    
         function Init()
         {
-            gameObj = new projectStella.Game(1);
+            var elem = document.getElementById("PrincessKnight");
+            elem.width = $(window).width() / 3;
+            
+            elem = document.getElementById("Dragon");
+            elem.width = $(window).width() / 3;
+        }
+        
+        function Resize()
+        {
+            var elem = document.getElementById("PrincessKnight");
+            elem.width = $(window).width() / 3;
+            
+            elem = document.getElementById("Dragon");
+            elem.width = $(window).width() / 3;
         }
     </script>
 </head>
-<body onload="Init();">
+<body onload="Init()" onresize="Resize()">
      <section id="levelHeader">
         <header>
             <img src="img/Title.png">
@@ -25,17 +38,20 @@
     </section>
     
         <img src="img/PrincessKnight.png" 
-        style="position:absolute; 
-        float:left; 
-        left:10px; 
-        bottom:0px; 
-        z-index:-1;"/>
+            style="position:absolute; 
+            float:left; 
+            left:10px; 
+            bottom:0px; 
+            z-index:-1;"
+            id="PrincessKnight"/>
+        
         <img src="img/OrangeBlossom2.png" 
-        style="position:absolute; 
-        float:right; 
-        right:0px; 
-        bottom:0px; 
-        z-index:-1;"/>
+            style="position:absolute; 
+            float:right; 
+            right:0px; 
+            bottom:0px; 
+            z-index:-1;"
+            id="Dragon" />
 
 </body>
 </html>

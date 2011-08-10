@@ -85,18 +85,44 @@ projectStella.World.prototype.Init = function(canvasID)
              }
         }
         
-        if(this.Level == 1)
+        switch(this.Level)
         {
-            //Add final Gem location
-            this.FinalGem = new projectStella.GameSprite(projectStella.GameSpriteType.Gem,3,0);
-            this.DisplayList.push(this.FinalGem);
-            
-            //Setup main character
-            this.MainCharacter = new projectStella.GameSprite(projectStella.GameSpriteType.MainCharacter,3,3);
-            this.DisplayList.push(this.MainCharacter);
-            
-            //create other map elements - TODO
-            
+            case 1:
+                //Add final Gem location
+                this.FinalGem = new projectStella.GameSprite(projectStella.GameSpriteType.Gem,3,1);
+                this.DisplayList.push(this.FinalGem);
+                
+                //Setup main character
+                this.MainCharacter = new projectStella.GameSprite(projectStella.GameSpriteType.MainCharacter,3,3);
+                this.DisplayList.push(this.MainCharacter);
+                break;
+            case 2:
+                //Add final Gem location
+                this.FinalGem = new projectStella.GameSprite(projectStella.GameSpriteType.Gem,5,0);
+                this.DisplayList.push(this.FinalGem);
+                
+                //Setup main character
+                this.MainCharacter = new projectStella.GameSprite(projectStella.GameSpriteType.MainCharacter,5,4);
+                this.DisplayList.push(this.MainCharacter);
+                break;
+            case 3:
+                //Add final Gem location
+                this.FinalGem = new projectStella.GameSprite(projectStella.GameSpriteType.Gem,4,2);
+                this.DisplayList.push(this.FinalGem);
+                
+                //Setup main character
+                this.MainCharacter = new projectStella.GameSprite(projectStella.GameSpriteType.MainCharacter,3,3);
+                this.DisplayList.push(this.MainCharacter);
+                break;
+            case 4:
+                //Add final Gem location
+                this.FinalGem = new projectStella.GameSprite(projectStella.GameSpriteType.Gem,6,1);
+                this.DisplayList.push(this.FinalGem);
+                
+                //Setup main character
+                this.MainCharacter = new projectStella.GameSprite(projectStella.GameSpriteType.MainCharacter,2,4);
+                this.DisplayList.push(this.MainCharacter);
+                break;
         }
     };
 
